@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>독해와작문 [1과 자기소개]</title>
+<style>
+  :root{
+    --bg:#f4f1ec;
+    --card:#ffffff;
+    --accent:#c0392b;
+    --accent2:#2c5f7c;
+    --text:#2c2c2c;
+    --sub:#8a8a8a;
+    --border:#e4ded3;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,"Malgun Gothic","Apple SD Gothic Neo",sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding:24px 16px 60px;
+  }
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:10px;
+  }
+  .logo-flower{
+    position:relative;
+    width:52px;
+    height:52px;
+    flex-shrink:0;
+  }
+  .petal{
+    position:absolute;
+    mix-blend-mode:multiply;
+  }
+  .petal.yellow{
+    width:32px;height:36px;
+    top:0;left:11px;
+    background:#f5e08a;
+    border-radius:50% 50% 45% 45% / 60% 60% 40% 40%;
+    transform:rotate(-8deg);
+  }
+  .petal.blue{
+    width:30px;height:30px;
+    top:13px;left:0;
+    background:#a9d3e8;
+    border-radius:50%;
+  }
+  .petal.pink{
+    width:34px;height:36px;
+    top:20px;left:10px;
+    background:#f2c1da;
+    border-radius:45% 45% 55% 55% / 40% 40% 60% 60%;
+  }
+  .petal.green{
+    width:26px;height:26px;
+    top:10px;left:24px;
+    background:#c7d98d;
+    border-radius:50%;
+  }
+  .petal.peach{
+    width:20px;height:20px;
+    top:4px;left:16px;
+    background:#f0ba90;
+    border-radius:50%;
+  }
+  .logo-flower span{
+    position:absolute;
+    font-size:9px;
+    font-weight:700;
+    color:#fff;
+    text-shadow:0 0 2px rgba(0,0,0,0.15);
+  }
+  .logo-flower .ch1{ top:20px; left:6px; }
+  .logo-flower .ch2{ top:20px; left:19px; }
+  .logo-flower .ch3{ top:16px; left:31px; color:#e9e9e9; }
+  .brand-name{
+    font-size:19px;
+    font-weight:800;
+    letter-spacing:-0.3px;
+  }
+  .brand-name .c1{ color:#e79ac0; }
+  .brand-name .c2{ color:#8ec3e0; }
+  .brand-name .c3{ color:#9a9a9a; }
+  h1{
+    font-size:20px;
+    margin:0 0 4px;
+    font-weight:700;
+  }
+  .subtitle{
+    font-size:13px;
+    color:var(--sub);
+    margin-bottom:18px;
+  }
+  .controls-row{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    justify-content:center;
+    margin-bottom:16px;
+  }
+  .tab{
+    padding:7px 14px;
+    border-radius:20px;
+    border:1px solid var(--border);
+    background:#fff;
+    font-size:13px;
+    cursor:pointer;
+    color:var(--text);
+  }
+  .tab.active{
+    background:var(--accent2);
+    color:#fff;
+    border-color:var(--accent2);
+  }
+  .progress-wrap{
+    width:100%;
+    max-width:420px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    font-size:13px;
+    color:var(--sub);
+    margin-bottom:10px;
+  }
+  .progress-bar-bg{
+    width:100%;
+    max-width:420px;
+    height:5px;
+    background:var(--border);
+    border-radius:4px;
+    overflow:hidden;
+    margin-bottom:22px;
+  }
+  .progress-bar-fill{
+    height:100%;
+    background:var(--accent2);
+    transition:width .2s ease;
+  }
+  .card-wrap{
+    width:100%;
+    max-width:420px;
+    height:260px;
+    perspective:1200px;
+    margin-bottom:22px;
+  }
+  .card{
+    position:relative;
+    width:100%;
+    height:100%;
+    transition:transform .45s cubic-bezier(.4,.2,.2,1);
+    transform-style:preserve-3d;
+    cursor:pointer;
+  }
+  .card.flipped{
+    transform:rotateY(180deg);
+  }
+  .card.no-anim{
+    transition:none !important;
+  }
+  .face{
+    position:absolute;
+    inset:0;
+    backface-visibility:hidden;
+    border-radius:18px;
+    background:var(--card);
+    box-shadow:0 4px 18px rgba(0,0,0,0.08);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:20px;
+    border:1px solid var(--border);
+  }
+  .face.back{
+    transform:rotateY(180deg);
+  }
+  .tag{
+    position:absolute;
+    top:14px;
+    left:16px;
+    font-size:11px;
+    color:var(--sub);
+    background:var(--bg);
+    padding:3px 9px;
+    border-radius:10px;
+  }
+  .word{
+    font-size:40px;
+    font-weight:700;
+    line-height:1.3;
+    word-break:keep-all;
+  }
+  .reading{
+    font-size:18px;
+    color:var(--accent2);
+    margin-top:10px;
+  }
+  .meaning{
+    font-size:26px;
+    font-weight:700;
+    margin-bottom:10px;
+  }
+  .reading-small{
+    font-size:15px;
+    color:var(--sub);
+  }
+  .hint{
+    font-size:12px;
+    color:var(--sub);
+    margin-top:6px;
+  }
+  .nav-row{
+    display:flex;
+    align-items:center;
+    gap:18px;
+    margin-bottom:16px;
+  }
+  .nav-btn{
+    width:52px;
+    height:52px;
+    border-radius:50%;
+    border:none;
+    background:var(--accent2);
+    color:#fff;
+    font-size:20px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-shadow:0 2px 8px rgba(0,0,0,0.15);
+  }
+  .nav-btn:active{
+    transform:scale(0.95);
+  }
+  .flip-btn{
+    background:var(--accent);
+    border-radius:24px;
+    width:auto;
+    padding:0 22px;
+    font-size:14px;
+    height:44px;
+  }
+  .know-row{
+    display:flex;
+    gap:10px;
+    margin-bottom:8px;
+  }
+  .know-btn{
+    padding:8px 16px;
+    border-radius:20px;
+    border:1px solid var(--border);
+    background:#fff;
+    font-size:13px;
+    cursor:pointer;
+  }
+  .know-btn.on-known{
+    background:#e7f3ea;
+    border-color:#3f9a55;
+    color:#2c6e3d;
+  }
+  .know-btn.on-unknown{
+    background:#fbeaea;
+    border-color:var(--accent);
+    color:var(--accent);
+  }
+  .bottom-row{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    justify-content:center;
+    margin-top:6px;
+  }
+  .small-btn{
+    padding:7px 13px;
+    border-radius:16px;
+    border:1px solid var(--border);
+    background:#fff;
+    font-size:12px;
+    color:var(--sub);
+    cursor:pointer;
+  }
+  .small-btn.active{
+    background:#fff3e0;
+    border-color:#e0a030;
+    color:#a06a00;
+  }
+  .empty{
+    text-align:center;
+    color:var(--sub);
+    font-size:14px;
+    margin-top:40px;
+    line-height:1.6;
+  }
+</style>
+</head>
+<body>
+
+<div class="brand">
+  <div class="logo-flower">
+    <div class="petal yellow"></div>
+    <div class="petal blue"></div>
+    <div class="petal pink"></div>
+    <div class="petal green"></div>
+    <div class="petal peach"></div>
+    <span class="ch1">こ</span><span class="ch2">こ</span><span class="ch3">ろ</span>
+  </div>
+  <div class="brand-name"><span class="c1">코코로</span><span class="c2">원어민</span><span class="c3">일본어</span></div>
+</div>
+
+<h1>독해와작문 [1과 자기소개]</h1>
+<div class="subtitle">카드를 클릭(또는 Space)하면 뒤집혀요 · 총 <span id="totalCount">0</span>개</div>
+
+<div class="controls-row" id="catTabs"></div>
+
+<div class="progress-wrap">
+  <span id="posLabel">0 / 0</span>
+  <span id="knownLabel">외운 단어: 0</span>
+</div>
+<div class="progress-bar-bg"><div class="progress-bar-fill" id="progressFill"></div></div>
+
+<div class="card-wrap">
+  <div class="card" id="card">
+    <div class="face front">
+      <span class="tag" id="tagFront"></span>
+      <div class="word" id="wordFront"></div>
+      <div class="hint">탭해서 뜻 보기</div>
+    </div>
+    <div class="face back">
+      <span class="tag" id="tagBack"></span>
+      <div class="reading-small" id="readingBack"></div>
+      <div class="meaning" id="meaningBack"></div>
+    </div>
+  </div>
+</div>
+
+<div class="know-row">
+  <button class="know-btn" id="knownBtn">✓ 외웠어요</button>
+  <button class="know-btn" id="unknownBtn">✗ 다시 볼래요</button>
+</div>
+
+<div class="nav-row">
+  <button class="nav-btn" id="prevBtn">‹</button>
+  <button class="nav-btn flip-btn" id="flipBtn">뒤집기</button>
+  <button class="nav-btn" id="nextBtn">›</button>
+</div>
+
+<div class="bottom-row">
+  <button class="small-btn" id="shuffleBtn">🔀 섞기</button>
+  <button class="small-btn" id="resetShuffleBtn">↺ 원래 순서</button>
+  <button class="small-btn" id="reviewOnlyBtn">📌 안 외운 단어만</button>
+  <button class="small-btn" id="resetProgressBtn">🗑 기록 초기화</button>
+</div>
+
+<script>
+// ---------------- 단어 데이터 ----------------
+const DATA = [
+  // 한자 단어 학습 (1-89)
+  {k:"自己紹介", r:"じこしょうかい", m:"자기소개", cat:"한자"},
+  {k:"第一印象", r:"だいいちいんしょう", m:"첫인상", cat:"한자"},
+  {k:"見た目", r:"みため", m:"겉보기, 볼품", cat:"한자"},
+  {k:"性格", r:"せいかく", m:"성격", cat:"한자"},
+  {k:"心", r:"こころ", m:"마음", cat:"한자"},
+  {k:"考える", r:"かんがえる", m:"생각하다", cat:"한자"},
+  {k:"始めて", r:"はじめて", m:"처음", cat:"한자"},
+  {k:"会う", r:"あう", m:"만나다", cat:"한자"},
+  {k:"話上手", r:"はなしじょうず", m:"말을 잘함", cat:"한자"},
+  {k:"少し", r:"すこし", m:"조금", cat:"한자"},
+  {k:"緊張", r:"きんちょう", m:"긴장", cat:"한자"},
+  {k:"誰", r:"だれ", m:"누구", cat:"한자"},
+  {k:"話す", r:"はなす", m:"이야기하다", cat:"한자"},
+  {k:"相手", r:"あいて", m:"상대방", cat:"한자"},
+  {k:"印象", r:"いんしょう", m:"인상", cat:"한자"},
+  {k:"持つ", r:"もつ", m:"쥐다, 들다, 가지다", cat:"한자"},
+  {k:"話し", r:"はなし", m:"이야기", cat:"한자"},
+  {k:"内容", r:"ないよう", m:"내용", cat:"한자"},
+  {k:"~に関して", r:"~にかんして", m:"~에 관해서", cat:"한자"},
+  {k:"悩む", r:"なやむ", m:"고민하다", cat:"한자"},
+  {k:"場合", r:"ばあい", m:"경우", cat:"한자"},
+  {k:"研究", r:"けんきゅう", m:"연구", cat:"한자"},
+  {k:"際", r:"さい", m:"때, 기회", cat:"한자"},
+  {k:"時", r:"とき", m:"시간, 때", cat:"한자"},
+  {k:"決まる", r:"きまる", m:"결정되다", cat:"한자"},
+  {k:"人", r:"ひと", m:"사람", cat:"한자"},
+  {k:"決める", r:"きめる", m:"결정하다", cat:"한자"},
+  {k:"要素", r:"ようそ", m:"요소", cat:"한자"},
+  {k:"視覚", r:"しかく", m:"시각", cat:"한자"},
+  {k:"聴覚", r:"ちょうかく", m:"청각", cat:"한자"},
+  {k:"声", r:"こえ", m:"목소리", cat:"한자"},
+  {k:"言葉", r:"ことば", m:"말, 이야기", cat:"한자"},
+  {k:"見る", r:"みる", m:"보다", cat:"한자"},
+  {k:"最も", r:"もっとも", m:"가장", cat:"한자"},
+  {k:"大事", r:"だいじ", m:"큰일, 소중함", cat:"한자"},
+  {k:"分かる", r:"わかる", m:"알다", cat:"한자"},
+  {k:"容姿", r:"ようし", m:"모습, 생김새", cat:"한자"},
+  {k:"顔", r:"かお", m:"얼굴", cat:"한자"},
+  {k:"表情", r:"ひょうじょう", m:"표정", cat:"한자"},
+  {k:"態度", r:"たいど", m:"태도", cat:"한자"},
+  {k:"指す", r:"さす", m:"가리키다", cat:"한자"},
+  {k:"交わす", r:"かわす", m:"주고받다", cat:"한자"},
+  {k:"観察する", r:"かんさつする", m:"관찰하다", cat:"한자"},
+  {k:"次", r:"つぎ", m:"다음", cat:"한자"},
+  {k:"性格", r:"せいかく", m:"성격", cat:"한자"},
+  {k:"一方", r:"いっぽう", m:"한편", cat:"한자"},
+  {k:"以下", r:"いか", m:"이하", cat:"한자"},
+  {k:"過ぎる", r:"すぎる", m:"지나(치)다", cat:"한자"},
+  {k:"影響", r:"えいきょう", m:"영향", cat:"한자"},
+  {k:"与える", r:"あたえる", m:"주다", cat:"한자"},
+  {k:"声色", r:"こわいろ", m:"음색", cat:"한자"},
+  {k:"大事", r:"だいじ", m:"중요함", cat:"한자"},
+  {k:"接する", r:"せっする", m:"접하다", cat:"한자"},
+  {k:"悩む", r:"なやむ", m:"고민하다", cat:"한자"},
+  {k:"感じる", r:"かんじる", m:"느끼다", cat:"한자"},
+  {k:"製品", r:"せいひん", m:"제품", cat:"한자"},
+  {k:"お問い合わせ", r:"おといあわせ", m:"조회, 문의", cat:"한자"},
+  {k:"当社", r:"とうしゃ", m:"당사", cat:"한자"},
+  {k:"ご覧", r:"ごらん", m:"보심", cat:"한자"},
+  {k:"悪天候", r:"あくてんこう", m:"악천후", cat:"한자"},
+  {k:"頭痛", r:"ずつう", m:"두통", cat:"한자"},
+  {k:"取れる", r:"とれる", m:"없어지다, 가시다", cat:"한자"},
+  {k:"困る", r:"こまる", m:"곤란하다", cat:"한자"},
+  {k:"言い表す", r:"いいあらわす", m:"말로 나타내다", cat:"한자"},
+  {k:"自信", r:"じしん", m:"자신", cat:"한자"},
+  {k:"面接", r:"めんせつ", m:"면접", cat:"한자"},
+  {k:"驚く", r:"おどろく", m:"놀라다", cat:"한자"},
+  {k:"全然", r:"ぜんぜん", m:"전혀", cat:"한자"},
+  {k:"最後", r:"さいご", m:"마지막", cat:"한자"},
+  {k:"好印象", r:"こういんしょう", m:"좋은 인상", cat:"한자"},
+  {k:"笑顔", r:"えがお", m:"웃는 얼굴", cat:"한자"},
+  {k:"心がける", r:"こころがける", m:"명심하다", cat:"한자"},
+  {k:"猫背", r:"ねこぜ", m:"새우등", cat:"한자"},
+  {k:"余計だ", r:"よけいだ", m:"쓸데없다", cat:"한자"},
+  {k:"動作", r:"どうさ", m:"동작", cat:"한자"},
+  {k:"後ろ手", r:"うしろで", m:"뒷짐", cat:"한자"},
+  {k:"注意", r:"ちゅうい", m:"주의", cat:"한자"},
+  {k:"絞る", r:"しぼる", m:"짜다, 좁히다", cat:"한자"},
+  {k:"盛り込む", r:"もりこむ", m:"(음식을)담다, (내용을)포함시키다", cat:"한자"},
+  {k:"慣れる", r:"なれる", m:"익숙해지다", cat:"한자"},
+  {k:"避ける", r:"さける", m:"피하다, 삼가다", cat:"한자"},
+  {k:"お辞儀", r:"おじぎ", m:"절함, 인사", cat:"한자"},
+  {k:"修学旅行", r:"しゅうがくりょこう", m:"수학여행", cat:"한자"},
+  {k:"練習", r:"れんしゅう", m:"연습", cat:"한자"},
+  {k:"名刺", r:"めいし", m:"명함", cat:"한자"},
+  {k:"挨拶", r:"あいさつ", m:"인사", cat:"한자"},
+  {k:"交換", r:"こうかん", m:"교환", cat:"한자"},
+  {k:"欧米", r:"おうべい", m:"구미(유럽과 미국)", cat:"한자"},
+  {k:"仕方", r:"しかた", m:"하는 방법", cat:"한자"},
+
+  // 히라가나/가타카나 단어 (1-19)
+  {k:"イメージ", r:"", m:"이미지", cat:"가나"},
+  {k:"すなおだ", r:"", m:"순수하다", cat:"가나"},
+  {k:"ことわざ(諺)", r:"", m:"속담", cat:"가나"},
+  {k:"~ように", r:"", m:"~(하)도록", cat:"가나"},
+  {k:"ところで", r:"", m:"그런데", cat:"가나"},
+  {k:"~といっても", r:"", m:"~라 하더라도", cat:"가나"},
+  {k:"つまり", r:"", m:"결국", cat:"가나"},
+  {k:"しっかり", r:"", m:"확실히, 똑똑히", cat:"가나"},
+  {k:"イメージする", r:"", m:"상상하다", cat:"가나"},
+  {k:"~ということだ", r:"", m:"~인 것(내용)이다", cat:"가나"},
+  {k:"ホームページ", r:"", m:"홈페이지", cat:"가나"},
+  {k:"~ずに", r:"", m:"~않고(않아서)", cat:"가나"},
+  {k:"~ほど(に)", r:"", m:"~만큼, ~정도로", cat:"가나"},
+  {k:"アピール", r:"", m:"어필", cat:"가나"},
+  {k:"ポイント", r:"", m:"포인트", cat:"가나"},
+  {k:"ネガティブ", r:"", m:"네거티브, 부정적, 소극적", cat:"가나"},
+  {k:"フレーズ", r:"", m:"프레이즈, 문장(말)", cat:"가나"},
+  {k:"けつえきがた", r:"", m:"혈액형", cat:"가나"},
+  {k:"むちゅうだ", r:"", m:"열중하다, 몰두하다", cat:"가나"},
+];
+
+// ---------------- 상태 ----------------
+const STORAGE_KEY = "jp_flashcards_progress_v1";
+let known = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"); // {index: true}
+let currentCat = "전체";
+let order = [];
+let pos = 0;
+let flipped = false;
+let reviewOnly = false;
+
+function cardId(card){ return card.k + "|" + card.r; }
+
+function buildOrder(){
+  let base = DATA.map((c,i)=>i).filter(i=>{
+    const c = DATA[i];
+    if(currentCat !== "전체" && c.cat !== currentCat) return false;
+    if(reviewOnly && known[cardId(c)]) return false;
+    return true;
+  });
+  order = base;
+  pos = 0;
+}
+
+function shuffleOrder(){
+  for(let i=order.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [order[i],order[j]] = [order[j],order[i]];
+  }
+  pos = 0;
+  render();
+}
+
+function resetShuffleOrder(){
+  buildOrder();
+  render();
+}
+
+function saveProgress(){
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(known));
+}
+
+function countKnownInScope(){
+  let scopeIdx = DATA.map((c,i)=>i).filter(i => currentCat==="전체" || DATA[i].cat===currentCat);
+  return scopeIdx.filter(i => known[cardId(DATA[i])]).length;
+}
+
+function render(){
+  const total = order.length;
+  document.getElementById("totalCount").textContent = DATA.length;
+  document.getElementById("knownLabel").textContent = "외운 단어: " + countKnownInScope();
+
+  const cardEl = document.getElementById("card");
+  const wasFlipped = cardEl.classList.contains("flipped");
+  if(wasFlipped){
+    cardEl.classList.add("no-anim");
+  }
+  cardEl.classList.remove("flipped");
+  flipped = false;
+
+  if(total === 0){
+    document.getElementById("posLabel").textContent = "0 / 0";
+    document.getElementById("progressFill").style.width = "0%";
+    document.getElementById("wordFront").textContent = "";
+    document.getElementById("meaningBack").textContent = "";
+    document.getElementById("readingBack").textContent = "";
+    document.getElementById("tagFront").textContent = "";
+    document.getElementById("tagBack").textContent = "";
+    document.querySelector(".card-wrap").style.display = "none";
+    document.querySelector(".nav-row").style.display = "none";
+    document.querySelector(".know-row").style.display = "none";
+    let empty = document.getElementById("emptyMsg");
+    if(!empty){
+      empty = document.createElement("div");
+      empty.id = "emptyMsg";
+      empty.className = "empty";
+      empty.textContent = "🎉 이 조건에 해당하는 카드가 없어요.\n(안 외운 단어만 보기를 껐다가 다시 시도해보세요)";
+      document.body.appendChild(empty);
+    }
+    return;
+  } else {
+    document.querySelector(".card-wrap").style.display = "";
+    document.querySelector(".nav-row").style.display = "";
+    document.querySelector(".know-row").style.display = "";
+    const empty = document.getElementById("emptyMsg");
+    if(empty) empty.remove();
+  }
+
+  const idx = order[pos];
+  const card = DATA[idx];
+
+  document.getElementById("posLabel").textContent = (pos+1) + " / " + total;
+  document.getElementById("progressFill").style.width = ((pos+1)/total*100) + "%";
+
+  document.getElementById("wordFront").textContent = card.k;
+  document.getElementById("tagFront").textContent = card.cat;
+  document.getElementById("tagBack").textContent = card.cat;
+  document.getElementById("readingBack").textContent = card.r ? card.r : "";
+  document.getElementById("meaningBack").textContent = card.m;
+
+  const isKnown = known[cardId(card)];
+  document.getElementById("knownBtn").classList.toggle("on-known", !!isKnown);
+  document.getElementById("unknownBtn").classList.toggle("on-unknown", isKnown === false);
+
+  if(wasFlipped){
+    // force reflow so the instant (no-transition) reset actually applies,
+    // then re-enable the flip animation for the next manual flip
+    void cardEl.offsetHeight;
+    requestAnimationFrame(()=>{
+      requestAnimationFrame(()=>{
+        cardEl.classList.remove("no-anim");
+      });
+    });
+  }
+}
+
+function flip(){
+  if(order.length === 0) return;
+  flipped = !flipped;
+  document.getElementById("card").classList.toggle("flipped", flipped);
+}
+
+function next(){
+  if(order.length === 0) return;
+  pos = (pos+1) % order.length;
+  render();
+}
+function prev(){
+  if(order.length === 0) return;
+  pos = (pos-1+order.length) % order.length;
+  render();
+}
+
+function markKnown(val){
+  if(order.length===0) return;
+  const card = DATA[order[pos]];
+  if(val === null){
+    delete known[cardId(card)];
+  } else {
+    known[cardId(card)] = val;
+  }
+  saveProgress();
+  render();
+}
+
+// ---------------- 이벤트 ----------------
+document.getElementById("card").addEventListener("click", flip);
+document.getElementById("flipBtn").addEventListener("click", flip);
+document.getElementById("nextBtn").addEventListener("click", next);
+document.getElementById("prevBtn").addEventListener("click", prev);
+document.getElementById("shuffleBtn").addEventListener("click", shuffleOrder);
+document.getElementById("resetShuffleBtn").addEventListener("click", resetShuffleOrder);
+
+document.getElementById("knownBtn").addEventListener("click", ()=>{
+  const card = DATA[order[pos]];
+  if(known[cardId(card)] === true){ markKnown(null); } else { markKnown(true); }
+});
+document.getElementById("unknownBtn").addEventListener("click", ()=>{
+  const card = DATA[order[pos]];
+  if(known[cardId(card)] === false){ markKnown(null); } else { markKnown(false); }
+});
+
+document.getElementById("reviewOnlyBtn").addEventListener("click", (e)=>{
+  reviewOnly = !reviewOnly;
+  e.target.classList.toggle("active", reviewOnly);
+  buildOrder();
+  render();
+});
+
+document.getElementById("resetProgressBtn").addEventListener("click", ()=>{
+  if(confirm("외운 단어 표시를 전부 초기화할까요?")){
+    known = {};
+    saveProgress();
+    render();
+  }
+});
+
+document.addEventListener("keydown",(e)=>{
+  if(e.code === "Space"){ e.preventDefault(); flip(); }
+  else if(e.code === "ArrowRight"){ next(); }
+  else if(e.code === "ArrowLeft"){ prev(); }
+});
+
+// 카테고리 탭
+const cats = ["전체","한자","가나"];
+const catLabels = {"전체":"전체","한자":"한자 단어","가나":"히라가나/가타카나"};
+const tabsWrap = document.getElementById("catTabs");
+cats.forEach(cat=>{
+  const btn = document.createElement("button");
+  btn.className = "tab" + (cat===currentCat ? " active" : "");
+  btn.textContent = catLabels[cat];
+  btn.addEventListener("click", ()=>{
+    currentCat = cat;
+    document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
+    btn.classList.add("active");
+    buildOrder();
+    render();
+  });
+  tabsWrap.appendChild(btn);
+});
+
+// 초기화
+buildOrder();
+render();
+</script>
+</body>
+</html>
