@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JLPT N2 [문맥구성 25-10]</title>
+<style>
+  :root{
+    --bg:#eaf2ff;
+    --card:#ffffff;
+    --accent:#2f6fed;
+    --accent2:#00b4d8;
+    --blue:#1d4ed8;
+    --text:#20304d;
+    --sub:#7c8aa5;
+    --border:#d3e2fb;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,"Malgun Gothic","Apple SD Gothic Neo",sans-serif;
+    background:linear-gradient(160deg, #eef5ff 0%, #e3f4fb 100%);
+    color:var(--text);
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding:24px 16px 60px;
+  }
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:10px;
+  }
+  .logo-flower{
+    position:relative;
+    width:52px;
+    height:52px;
+    flex-shrink:0;
+  }
+  .petal{
+    position:absolute;
+    mix-blend-mode:multiply;
+  }
+  .petal.yellow{
+    width:32px;height:36px;
+    top:0;left:11px;
+    background:#f5e08a;
+    border-radius:50% 50% 45% 45% / 60% 60% 40% 40%;
+    transform:rotate(-8deg);
+  }
+  .petal.blue{
+    width:30px;height:30px;
+    top:13px;left:0;
+    background:#a9d3e8;
+    border-radius:50%;
+  }
+  .petal.pink{
+    width:34px;height:36px;
+    top:20px;left:10px;
+    background:#f2c1da;
+    border-radius:45% 45% 55% 55% / 40% 40% 60% 60%;
+  }
+  .petal.green{
+    width:26px;height:26px;
+    top:10px;left:24px;
+    background:#c7d98d;
+    border-radius:50%;
+  }
+  .petal.peach{
+    width:20px;height:20px;
+    top:4px;left:16px;
+    background:#f0ba90;
+    border-radius:50%;
+  }
+  .logo-flower span{
+    position:absolute;
+    font-size:9px;
+    font-weight:700;
+    color:#fff;
+    text-shadow:0 0 2px rgba(0,0,0,0.15);
+  }
+  .logo-flower .ch1{ top:20px; left:6px; }
+  .logo-flower .ch2{ top:20px; left:19px; }
+  .logo-flower .ch3{ top:16px; left:31px; color:#e9e9e9; }
+  .brand-name{
+    font-size:19px;
+    font-weight:800;
+    letter-spacing:-0.3px;
+  }
+  .brand-name .c1{ color:#e79ac0; }
+  .brand-name .c2{ color:#8ec3e0; }
+  .brand-name .c3{ color:#9a9a9a; }
+  h1{
+    font-size:20px;
+    margin:0 0 4px;
+    font-weight:700;
+  }
+  .subtitle{
+    font-size:13px;
+    color:var(--sub);
+    margin-bottom:18px;
+  }
+  .controls-row{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    justify-content:center;
+    margin-bottom:16px;
+  }
+  .tab{
+    padding:7px 14px;
+    border-radius:20px;
+    border:1px solid var(--border);
+    background:#fff;
+    font-size:13px;
+    cursor:pointer;
+    color:var(--text);
+  }
+  .tab.active{
+    background:var(--accent2);
+    color:#fff;
+    border-color:var(--accent2);
+  }
+  .progress-wrap{
+    width:100%;
+    max-width:420px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    font-size:13px;
+    color:var(--sub);
+    margin-bottom:10px;
+  }
+  .progress-bar-bg{
+    width:100%;
+    max-width:420px;
+    height:5px;
+    background:var(--border);
+    border-radius:4px;
+    overflow:hidden;
+    margin-bottom:22px;
+  }
+  .progress-bar-fill{
+    height:100%;
+    background:var(--accent2);
+    transition:width .2s ease;
+  }
+  .card-wrap{
+    width:100%;
+    max-width:420px;
+    height:320px;
+    perspective:1200px;
+    margin-bottom:22px;
+  }
+  .card{
+    position:relative;
+    width:100%;
+    height:100%;
+    transition:transform .45s cubic-bezier(.4,.2,.2,1);
+    transform-style:preserve-3d;
+    cursor:pointer;
+  }
+  .card.flipped{
+    transform:rotateY(180deg);
+  }
+  .card.no-anim{
+    transition:none !important;
+  }
+  .face{
+    position:absolute;
+    inset:0;
+    backface-visibility:hidden;
+    border-radius:18px;
+    background:var(--card);
+    box-shadow:0 4px 18px rgba(0,0,0,0.08);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:20px;
+    border:1px solid var(--border);
+  }
+  .face.back{
+    transform:rotateY(180deg);
+  }
+  .tag{
+    position:absolute;
+    top:14px;
+    left:16px;
+    font-size:11px;
+    color:var(--sub);
+    background:var(--bg);
+    padding:3px 9px;
+    border-radius:10px;
+  }
+  .word{
+    font-size:clamp(44px, 14vw, 66px);
+    font-weight:700;
+    line-height:1.3;
+    word-break:keep-all;
+  }
+  .reading{
+    font-size:18px;
+    color:var(--accent2);
+    margin-top:10px;
+  }
+  .meaning{
+    font-size:clamp(22px, 6.5vw, 28px);
+    font-weight:700;
+    color:var(--blue);
+    margin-bottom:10px;
+  }
+  .word-back{
+    font-size:clamp(28px, 8.5vw, 36px);
+    font-weight:400;
+    color:var(--text);
+    margin-bottom:10px;
+  }
+  .reading-small{
+    font-size:clamp(22px, 6.5vw, 28px);
+    font-weight:700;
+    color:var(--text);
+  }
+  .hint{
+    font-size:12px;
+    color:var(--sub);
+    margin-top:6px;
+  }
+  .nav-row{
+    display:flex;
+    align-items:center;
+    gap:18px;
+    margin-bottom:16px;
+  }
+  .nav-btn{
+    width:52px;
+    height:52px;
+    border-radius:50%;
+    border:none;
+    background:var(--accent2);
+    color:#fff;
+    font-size:20px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-shadow:0 2px 8px rgba(0,0,0,0.15);
+  }
+  .nav-btn:active{
+    transform:scale(0.95);
+  }
+  .flip-btn{
+    background:var(--accent);
+    border-radius:24px;
+    width:auto;
+    padding:0 22px;
+    font-size:14px;
+    height:44px;
+  }
+  .know-row{
+    display:flex;
+    gap:10px;
+    margin-bottom:8px;
+  }
+  .know-btn{
+    padding:8px 16px;
+    border-radius:20px;
+    border:1px solid var(--border);
+    background:#fff;
+    font-size:13px;
+    cursor:pointer;
+  }
+  .know-btn.on-known{
+    background:#e7f3ea;
+    border-color:#3f9a55;
+    color:#2c6e3d;
+  }
+  .know-btn.on-unknown{
+    background:#fbeaea;
+    border-color:var(--accent);
+    color:var(--accent);
+  }
+  .bottom-row{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    justify-content:center;
+    margin-top:6px;
+  }
+  .small-btn{
+    padding:7px 13px;
+    border-radius:16px;
+    border:1px solid var(--border);
+    background:#fff;
+    font-size:12px;
+    color:var(--sub);
+    cursor:pointer;
+  }
+  .small-btn.active{
+    background:#fff3e0;
+    border-color:#e0a030;
+    color:#a06a00;
+  }
+  .empty{
+    text-align:center;
+    color:var(--sub);
+    font-size:14px;
+    margin-top:40px;
+    line-height:1.6;
+  }
+</style>
+</head>
+<body>
+
+<div class="brand">
+  <div class="logo-flower">
+    <div class="petal yellow"></div>
+    <div class="petal blue"></div>
+    <div class="petal pink"></div>
+    <div class="petal green"></div>
+    <div class="petal peach"></div>
+    <span class="ch1">こ</span><span class="ch2">こ</span><span class="ch3">ろ</span>
+  </div>
+  <div class="brand-name"><span class="c1">코코로</span><span class="c2">원어민</span><span class="c3">일본어</span></div>
+</div>
+
+<h1>JLPT N2 [문맥구성 25-10]</h1>
+<div class="subtitle">카드를 클릭(또는 Space)하면 뒤집혀요 · 총 <span id="totalCount">0</span>개</div>
+
+<div class="controls-row" id="catTabs"></div>
+
+<div class="progress-wrap">
+  <span id="posLabel">0 / 0</span>
+  <span id="knownLabel">외운 단어: 0</span>
+</div>
+<div class="progress-bar-bg"><div class="progress-bar-fill" id="progressFill"></div></div>
+
+<div class="card-wrap">
+  <div class="card" id="card">
+    <div class="face front">
+      <span class="tag" id="tagFront"></span>
+      <div class="word" id="wordFront"></div>
+      <div class="hint">탭해서 뜻 보기</div>
+    </div>
+    <div class="face back">
+      <span class="tag" id="tagBack"></span>
+      <div class="word-back" id="wordBack"></div>
+      <div class="reading-small" id="readingBack"></div>
+      <div class="meaning" id="meaningBack"></div>
+    </div>
+  </div>
+</div>
+
+<div class="know-row">
+  <button class="know-btn" id="knownBtn">✓ 외웠어요</button>
+  <button class="know-btn" id="unknownBtn">✗ 다시 볼래요</button>
+</div>
+
+<div class="nav-row">
+  <button class="nav-btn" id="prevBtn">‹</button>
+  <button class="nav-btn flip-btn" id="flipBtn">뒤집기</button>
+  <button class="nav-btn" id="nextBtn">›</button>
+</div>
+
+<div class="bottom-row">
+  <button class="small-btn" id="shuffleBtn">🔀 섞기</button>
+  <button class="small-btn" id="resetShuffleBtn">↺ 원래 순서</button>
+  <button class="small-btn" id="reviewOnlyBtn">📌 안 외운 단어만</button>
+  <button class="small-btn" id="resetProgressBtn">🗑 기록 초기화</button>
+</div>
+
+<script>
+// ---------------- 단어 데이터 ----------------
+const DATA = [
+  {k:"一時的に", r:"いちじてきに", m:"일시적으로", cat:"2025~2021"},
+  {k:"裏付ける", r:"うらづける", m:"뒷받침하다", cat:"2025~2021"},
+  {k:"追い払う", r:"おいはらう", m:"쫓아 버리다", cat:"2025~2021"},
+  {k:"関与", r:"かんよ", m:"관여", cat:"2025~2021"},
+  {k:"くたくた", r:"", m:"녹초가 된 모양", cat:"2025~2021"},
+  {k:"スタイル", r:"", m:"스타일", cat:"2025~2021"},
+  {k:"ステージ", r:"", m:"스테이지, 무대", cat:"2025~2021"},
+  {k:"誓う", r:"ちかう", m:"맹세하다", cat:"2025~2021"},
+  {k:"飛び散る", r:"とびちる", m:"사방으로 튀다", cat:"2025~2021"},
+  {k:"反則", r:"はんそく", m:"반칙", cat:"2025~2021"},
+  {k:"敏感", r:"びんかん", m:"민감함", cat:"2025~2021"},
+  {k:"べたべた", r:"", m:"끈적끈적", cat:"2025~2021"},
+  {k:"要約", r:"ようやく", m:"요약", cat:"2025~2021"},
+  {k:"予防", r:"よぼう", m:"예방", cat:"2025~2021"},
+
+  {k:"インパクト", r:"", m:"임팩트, 충격, 인상", cat:"2025~2021"},
+  {k:"衰える", r:"おとろえる", m:"쇠약해지다, 쇠퇴하다", cat:"2025~2021"},
+  {k:"思い込む", r:"おもいこむ", m:"굳게 믿다", cat:"2025~2021"},
+  {k:"完了", r:"かんりょう", m:"완료", cat:"2025~2021"},
+  {k:"口調", r:"くちょう", m:"말투", cat:"2025~2021"},
+  {k:"省略", r:"しょうりゃく", m:"생략", cat:"2025~2021"},
+  {k:"ずうずうしい", r:"", m:"뻔뻔하다", cat:"2025~2021"},
+  {k:"そそっかしい", r:"", m:"덜렁거리다", cat:"2025~2021"},
+  {k:"多大な", r:"ただいな", m:"커다란, 막대한", cat:"2025~2021"},
+  {k:"通過", r:"つうか", m:"통과", cat:"2025~2021"},
+  {k:"溶け込む", r:"とけこむ", m:"녹아들다", cat:"2025~2021"},
+  {k:"歩道", r:"ほどう", m:"보도, 보행로", cat:"2025~2021"},
+  {k:"もてなす", r:"", m:"대접하다", cat:"2025~2021"},
+  {k:"役目", r:"やくめ", m:"역할", cat:"2025~2021"},
+
+  {k:"かさかさ", r:"", m:"꺼칠꺼칠, 바삭바삭", cat:"2025~2021"},
+  {k:"求人", r:"きゅうじん", m:"구인, 일할 사람을 구함", cat:"2025~2021"},
+  {k:"後悔", r:"こうかい", m:"후회", cat:"2025~2021"},
+  {k:"好調", r:"こうちょう", m:"호조, 순조, 좋은 상태임", cat:"2025~2021"},
+  {k:"誤解", r:"ごかい", m:"오해", cat:"2025~2021"},
+  {k:"こそこそ", r:"", m:"소곤소곤", cat:"2025~2021"},
+  {k:"節約", r:"せつやく", m:"절약", cat:"2025~2021"},
+  {k:"頼もしい", r:"たのもしい", m:"믿음직하다", cat:"2025~2021"},
+  {k:"特定", r:"とくてい", m:"특정", cat:"2025~2021"},
+  {k:"飛びつく", r:"とびつく", m:"달려들다", cat:"2025~2021"},
+  {k:"まねる", r:"", m:"흉내 내다", cat:"2025~2021"},
+  {k:"盛り上がる", r:"もりあがる", m:"고조되다", cat:"2025~2021"},
+  {k:"リハーサル", r:"", m:"리허설", cat:"2025~2021"},
+  {k:"話題", r:"わだい", m:"화제", cat:"2025~2021"},
+
+  {k:"抱く", r:"いだく", m:"(마음 등을) 품다", cat:"2025~2021"},
+  {k:"違反", r:"いはん", m:"위반", cat:"2025~2021"},
+  {k:"劣る", r:"おとる", m:"뒤떨어지다", cat:"2025~2021"},
+  {k:"ぎっしり", r:"", m:"가득 찬 모양, 잔뜩", cat:"2025~2021"},
+  {k:"苦情", r:"くじょう", m:"불만, 고충", cat:"2025~2021"},
+  {k:"クリア", r:"", m:"통과함, 헤쳐 나감", cat:"2025~2021"},
+  {k:"劇的に", r:"げきてきに", m:"극적으로", cat:"2025~2021"},
+  {k:"交渉", r:"こうしょう", m:"교섭", cat:"2025~2021"},
+  {k:"締め切る", r:"しめきる", m:"마감하다", cat:"2025~2021"},
+  {k:"進出", r:"しんしゅつ", m:"진출", cat:"2025~2021"},
+  {k:"接続", r:"せつぞく", m:"접속", cat:"2025~2021"},
+  {k:"設備", r:"せつび", m:"설비", cat:"2025~2021"},
+  {k:"ぞろぞろ", r:"", m:"졸졸, 줄줄", cat:"2025~2021"},
+  {k:"まれだ", r:"", m:"드물다", cat:"2025~2021"},
+
+  {k:"思いきって", r:"おもいきって", m:"과감히, 큰맘 먹고", cat:"2025~2021"},
+  {k:"開設", r:"かいせつ", m:"개설", cat:"2025~2021"},
+  {k:"解約", r:"かいやく", m:"해약", cat:"2025~2021"},
+  {k:"固める", r:"かためる", m:"굳히다", cat:"2025~2021"},
+  {k:"格好", r:"かっこう", m:"모습, 행색", cat:"2025~2021"},
+  {k:"気軽に", r:"きがるに", m:"선뜻, 가벼운 마음으로", cat:"2025~2021"},
+  {k:"ぎりぎり", r:"", m:"아슬아슬함, 빠듯함", cat:"2025~2021"},
+  {k:"限界", r:"げんかい", m:"한계", cat:"2025~2021"},
+  {k:"上昇", r:"じょうしょう", m:"상승", cat:"2025~2021"},
+  {k:"じろじろ", r:"", m:"빤히, 유심히", cat:"2025~2021"},
+  {k:"タイミング", r:"", m:"타이밍", cat:"2025~2021"},
+  {k:"添付", r:"てんぷ", m:"첨부", cat:"2025~2021"},
+  {k:"ニーズ", r:"", m:"필요, 수요, 요구", cat:"2025~2021"},
+  {k:"雇う", r:"やとう", m:"고용하다", cat:"2025~2021"},
+
+  {k:"争う", r:"あらそう", m:"다투다, 경쟁하다", cat:"2020~2010"},
+  {k:"いいかげん", r:"", m:"건성임, 무책임함", cat:"2020~2010"},
+  {k:"気配", r:"けはい", m:"기색, 기미", cat:"2020~2010"},
+  {k:"尊重", r:"そんちょう", m:"존중", cat:"2020~2010"},
+  {k:"ターゲット", r:"", m:"타깃, 표적, 대상", cat:"2020~2010"},
+  {k:"独特", r:"どくとく", m:"독특함", cat:"2020~2010"},
+  {k:"評価", r:"ひょうか", m:"평가", cat:"2020~2010"},
+
+  {k:"あいまい", r:"", m:"애매함", cat:"2020~2010"},
+  {k:"あこがれ", r:"", m:"동경", cat:"2020~2010"},
+  {k:"うなずく", r:"", m:"수긍하다, (고개를) 끄덕이다", cat:"2020~2010"},
+  {k:"衰える", r:"おとろえる", m:"쇠약해지다, 쇠퇴하다", cat:"2020~2010"},
+  {k:"ごちゃごちゃ", r:"", m:"어지러이 뒤섞임, 너저분한 모양", cat:"2020~2010"},
+  {k:"栽培", r:"さいばい", m:"재배", cat:"2020~2010"},
+  {k:"転勤", r:"てんきん", m:"전근", cat:"2020~2010"},
+  {k:"不安定", r:"ふあんてい", m:"불안정함", cat:"2020~2010"},
+  {k:"ふさわしい", r:"", m:"적합하다, 어울리다", cat:"2020~2010"},
+  {k:"プレッシャー", r:"", m:"압력, 압박", cat:"2020~2010"},
+  {k:"分担", r:"ぶんたん", m:"분담", cat:"2020~2010"},
+  {k:"本物", r:"ほんもの", m:"진짜, 실물", cat:"2020~2010"},
+  {k:"面倒", r:"めんどう", m:"귀찮음, 번거로움", cat:"2020~2010"},
+  {k:"油断", r:"ゆだん", m:"방심, 부주의", cat:"2020~2010"},
+
+  {k:"アレンジ", r:"", m:"정리, 변형, 각색", cat:"2020~2010"},
+  {k:"欠かす", r:"かかす", m:"빠뜨리다, 빼먹다", cat:"2020~2010"},
+  {k:"地元", r:"じもと", m:"그 지역, 그 고장, 연고지", cat:"2020~2010"},
+  {k:"スペース", r:"", m:"공간", cat:"2020~2010"},
+  {k:"続出", r:"ぞくしゅつ", m:"속출", cat:"2020~2010"},
+  {k:"達する", r:"たっする", m:"이르다, 도달하다", cat:"2020~2010"},
+  {k:"着々と", r:"ちゃくちゃくと", m:"착착, 척척", cat:"2020~2010"},
+  {k:"でたらめに", r:"", m:"엉터리로, 아무렇게나", cat:"2020~2010"},
+  {k:"点検", r:"てんけん", m:"점검", cat:"2020~2010"},
+  {k:"独特", r:"どくとく", m:"독특함", cat:"2020~2010"},
+  {k:"飛び散る", r:"とびちる", m:"흩날리다", cat:"2020~2010"},
+  {k:"にっこり", r:"", m:"빙긋(이)", cat:"2020~2010"},
+  {k:"発揮", r:"はっき", m:"발휘", cat:"2020~2010"},
+  {k:"敏感", r:"びんかん", m:"민감함", cat:"2020~2010"},
+
+  {k:"アピール", r:"", m:"어필, 호소", cat:"2020~2010"},
+  {k:"打ち消す", r:"うちけす", m:"부정하다", cat:"2020~2010"},
+  {k:"穏やか", r:"おだやか", m:"온화함", cat:"2020~2010"},
+  {k:"確保", r:"かくほ", m:"확보", cat:"2020~2010"},
+  {k:"ぎりぎり", r:"", m:"아슬아슬함, 빠듯함", cat:"2020~2010"},
+  {k:"苦情", r:"くじょう", m:"불평, 불만", cat:"2020~2010"},
+  {k:"悔やむ", r:"くやむ", m:"후회하다, 애석하게 여기다", cat:"2020~2010"},
+  {k:"契機", r:"けいき", m:"계기", cat:"2020~2010"},
+  {k:"そそっかしい", r:"", m:"경솔하다, 덜렁대다", cat:"2020~2010"},
+  {k:"バランス", r:"", m:"밸런스, 균형", cat:"2020~2010"},
+  {k:"ひそひそ", r:"", m:"소곤소곤", cat:"2020~2010"},
+  {k:"豊富に", r:"ほうふに", m:"풍부하게, 풍족하게", cat:"2020~2010"},
+  {k:"名所", r:"めいしょ", m:"명소", cat:"2020~2010"},
+  {k:"有利", r:"ゆうり", m:"유리함", cat:"2020~2010"},
+
+  {k:"安易", r:"あんい", m:"손쉬움, 안이함", cat:"2020~2010"},
+  {k:"活発", r:"かっぱつ", m:"활발함", cat:"2020~2010"},
+  {k:"ぐったり", r:"", m:"녹초가 됨, 늘어짐", cat:"2020~2010"},
+  {k:"邪魔", r:"じゃま", m:"방해, 거추장스러움", cat:"2020~2010"},
+  {k:"収穫", r:"しゅうかく", m:"수확", cat:"2020~2010"},
+  {k:"ショック", r:"", m:"쇼크, 충격", cat:"2020~2010"},
+  {k:"たのもしい", r:"", m:"믿음직하다, 기대할 만하다", cat:"2020~2010"},
+  {k:"提供", r:"ていきょう", m:"제공", cat:"2020~2010"},
+  {k:"なだらか", r:"", m:"(경사 등이) 완만함", cat:"2020~2010"},
+  {k:"のんびり", r:"", m:"느긋함, 태평함", cat:"2020~2010"},
+  {k:"引き止める", r:"ひきとめる", m:"말리다, 붙잡다", cat:"2020~2010"},
+  {k:"普及", r:"ふきゅう", m:"보급", cat:"2020~2010"},
+  {k:"リーダー", r:"", m:"리더, 지도자", cat:"2020~2010"},
+  {k:"割り込む", r:"わりこむ", m:"끼어들다, 새치기하다", cat:"2020~2010"},
+
+  {k:"輝かしい", r:"かがやかしい", m:"빛나다, 눈부시다", cat:"2020~2010"},
+  {k:"完了", r:"かんりょう", m:"완료", cat:"2020~2010"},
+  {k:"時間をつぶす", r:"じかんをつぶす", m:"시간을 때우다", cat:"2020~2010"},
+  {k:"柔軟", r:"じゅうなん", m:"유연함", cat:"2020~2010"},
+  {k:"鋭い", r:"するどい", m:"날카롭다, 예리하다", cat:"2020~2010"},
+  {k:"相違", r:"そうい", m:"상이함, 다름", cat:"2020~2010"},
+  {k:"たっぷり", r:"", m:"듬뿍, 많이", cat:"2020~2010"},
+  {k:"デザイン", r:"", m:"디자인", cat:"2020~2010"},
+  {k:"特色", r:"とくしょく", m:"특색", cat:"2020~2010"},
+  {k:"濁る", r:"にごる", m:"흐려지다, 탁해지다", cat:"2020~2010"},
+  {k:"バランス", r:"", m:"밸런스, 균형", cat:"2020~2010"},
+  {k:"びっしょり", r:"", m:"흠뻑 젖은 모양", cat:"2020~2010"},
+  {k:"面する", r:"めんする", m:"면하다, 마주 보다", cat:"2020~2010"},
+  {k:"予測", r:"よそく", m:"예측", cat:"2020~2010"},
+
+  {k:"あらかじめ", r:"", m:"사전에, 미리", cat:"2020~2010"},
+  {k:"一気に", r:"いっきに", m:"단숨에", cat:"2020~2010"},
+  {k:"うとうと", r:"", m:"꾸벅꾸벅 조는 모양", cat:"2020~2010"},
+  {k:"思いきって", r:"おもいきって", m:"과감히, 큰맘 먹고", cat:"2020~2010"},
+  {k:"差し支える", r:"さしつかえる", m:"지장이 있다", cat:"2020~2010"},
+  {k:"体格", r:"たいかく", m:"체격", cat:"2020~2010"},
+  {k:"蓄える", r:"たくわえる", m:"저장하다, 비축하다", cat:"2020~2010"},
+  {k:"訂正", r:"ていせい", m:"정정, 고쳐서 바로잡음", cat:"2020~2010"},
+  {k:"導入", r:"どうにゅう", m:"도입", cat:"2020~2010"},
+  {k:"腹を立てる", r:"はらをたてる", m:"화를 내다", cat:"2020~2010"},
+  {k:"パンク", r:"", m:"펑크, 터짐", cat:"2020~2010"},
+  {k:"目指す", r:"めざす", m:"목표로 하다", cat:"2020~2010"},
+  {k:"やかましい", r:"", m:"시끄럽다", cat:"2020~2010"},
+  {k:"リラックス", r:"", m:"편안함, 긴장을 풀고 편히 쉼", cat:"2020~2010"},
+
+  {k:"あいにく", r:"", m:"공교롭게도", cat:"2020~2010"},
+  {k:"意欲", r:"いよく", m:"의욕", cat:"2020~2010"},
+  {k:"解散", r:"かいさん", m:"해산", cat:"2020~2010"},
+  {k:"格好", r:"かっこう", m:"모양, 모습", cat:"2020~2010"},
+  {k:"見当", r:"けんとう", m:"예측, 짐작", cat:"2020~2010"},
+  {k:"すっきり", r:"", m:"말쑥함, 상쾌함", cat:"2020~2010"},
+  {k:"スムーズに", r:"", m:"순조롭게", cat:"2020~2010"},
+  {k:"ぜいたく", r:"", m:"사치스러움", cat:"2020~2010"},
+  {k:"専念", r:"せんねん", m:"전념", cat:"2020~2010"},
+  {k:"中継", r:"ちゅうけい", m:"중계", cat:"2020~2010"},
+  {k:"つまずく", r:"", m:"발에 걸려 넘어지다", cat:"2020~2010"},
+  {k:"つらい", r:"", m:"괴롭다", cat:"2020~2010"},
+  {k:"比例", r:"ひれい", m:"비례", cat:"2020~2010"},
+  {k:"呼び止める", r:"よびとめる", m:"불러 세우다", cat:"2020~2010"},
+
+  {k:"いらいら", r:"", m:"초조해함, 안절부절못함", cat:"2020~2010"},
+  {k:"得る", r:"える", m:"얻다", cat:"2020~2010"},
+  {k:"改正", r:"かいせい", m:"개정", cat:"2020~2010"},
+  {k:"抱える", r:"かかえる", m:"(껴)안다, (문제를) 떠안다", cat:"2020~2010"},
+  {k:"かたよる", r:"", m:"치우치다", cat:"2020~2010"},
+  {k:"ぐちを言う", r:"ぐちをいう", m:"푸념을 하다", cat:"2020~2010"},
+  {k:"ごろごろ", r:"", m:"뒹굴뒹굴, 데굴데굴", cat:"2020~2010"},
+  {k:"辞退", r:"じたい", m:"사퇴", cat:"2020~2010"},
+  {k:"成長", r:"せいちょう", m:"성장", cat:"2020~2010"},
+  {k:"着々と", r:"ちゃくちゃくと", m:"착착, 척척", cat:"2020~2010"},
+  {k:"散らかす", r:"ちらかす", m:"어지르다", cat:"2020~2010"},
+  {k:"適度", r:"てきど", m:"적당한 정도", cat:"2020~2010"},
+  {k:"場面", r:"ばめん", m:"장면", cat:"2020~2010"},
+  {k:"夢中になる", r:"むちゅうになる", m:"푹 빠지다, 열중하다", cat:"2020~2010"},
+
+  {k:"解消", r:"かいしょう", m:"해소", cat:"2020~2010"},
+  {k:"改善", r:"かいぜん", m:"개선", cat:"2020~2010"},
+  {k:"活気", r:"かっき", m:"활기", cat:"2020~2010"},
+  {k:"機能", r:"きのう", m:"기능", cat:"2020~2010"},
+  {k:"さっぱり", r:"", m:"상쾌함", cat:"2020~2010"},
+  {k:"視野", r:"しや", m:"시야", cat:"2020~2010"},
+  {k:"迫る", r:"せまる", m:"다가오다", cat:"2020~2010"},
+  {k:"詰まる", r:"つまる", m:"막히다", cat:"2020~2010"},
+  {k:"強み", r:"つよみ", m:"강점, 유리한 점", cat:"2020~2010"},
+  {k:"反映", r:"はんえい", m:"반영", cat:"2020~2010"},
+  {k:"ぶらぶら", r:"", m:"어슬렁어슬렁, 빈둥빈둥", cat:"2020~2010"},
+  {k:"分析", r:"ぶんせき", m:"분석", cat:"2020~2010"},
+  {k:"ぼんやり", r:"", m:"멍하니, 흐릿하게", cat:"2020~2010"},
+  {k:"わりと", r:"", m:"비교적", cat:"2020~2010"},
+
+  {k:"相次ぐ", r:"あいつぐ", m:"잇따르다, 연달다", cat:"2020~2010"},
+  {k:"あいまい", r:"", m:"애매함", cat:"2020~2010"},
+  {k:"温厚", r:"おんこう", m:"(성격이) 온화하고 다정함", cat:"2020~2010"},
+  {k:"シーズン", r:"", m:"시즌, 시기, 철", cat:"2020~2010"},
+  {k:"上昇", r:"じょうしょう", m:"상승", cat:"2020~2010"},
+  {k:"徐々に", r:"じょじょに", m:"서서히", cat:"2020~2010"},
+  {k:"通じる", r:"つうじる", m:"통하다", cat:"2020~2010"},
+  {k:"のんびり", r:"", m:"느긋하게, 태평하게", cat:"2020~2010"},
+  {k:"発揮", r:"はっき", m:"발휘", cat:"2020~2010"},
+  {k:"尽きる", r:"つきる", m:"끝나다, 다하다", cat:"2020~2010"},
+  {k:"評判", r:"ひょうばん", m:"평판, 유명함", cat:"2020~2010"},
+  {k:"含む", r:"ふくむ", m:"포함하다", cat:"2020~2010"},
+  {k:"マイペース", r:"", m:"자기 나름의 방식", cat:"2020~2010"},
+  {k:"有効", r:"ゆうこう", m:"유효함", cat:"2020~2010"},
+];
+
+// ---------------- 상태 ----------------
+const STORAGE_KEY = "jp_flashcards_progress_n2_munmaek_25_10";
+let known = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"); // {index: true}
+let currentCat = "전체";
+let order = [];
+let pos = 0;
+let flipped = false;
+let reviewOnly = false;
+
+function cardId(card){ return card.k + "|" + card.r; }
+
+function buildOrder(){
+  let base = DATA.map((c,i)=>i).filter(i=>{
+    const c = DATA[i];
+    if(currentCat !== "전체" && c.cat !== currentCat) return false;
+    if(reviewOnly && known[cardId(c)]) return false;
+    return true;
+  });
+  order = base;
+  pos = 0;
+}
+
+function shuffleOrder(){
+  for(let i=order.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [order[i],order[j]] = [order[j],order[i]];
+  }
+  pos = 0;
+  render();
+}
+
+function resetShuffleOrder(){
+  buildOrder();
+  render();
+}
+
+function saveProgress(){
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(known));
+}
+
+function countKnownInScope(){
+  let scopeIdx = DATA.map((c,i)=>i).filter(i => currentCat==="전체" || DATA[i].cat===currentCat);
+  return scopeIdx.filter(i => known[cardId(DATA[i])]).length;
+}
+
+function render(){
+  const total = order.length;
+  document.getElementById("totalCount").textContent = DATA.length;
+  document.getElementById("knownLabel").textContent = "외운 단어: " + countKnownInScope();
+
+  const cardEl = document.getElementById("card");
+  const wasFlipped = cardEl.classList.contains("flipped");
+  if(wasFlipped){
+    cardEl.classList.add("no-anim");
+  }
+  cardEl.classList.remove("flipped");
+  flipped = false;
+
+  if(total === 0){
+    document.getElementById("posLabel").textContent = "0 / 0";
+    document.getElementById("progressFill").style.width = "0%";
+    document.getElementById("wordFront").textContent = "";
+    document.getElementById("meaningBack").textContent = "";
+    document.getElementById("readingBack").textContent = "";
+    document.getElementById("tagFront").textContent = "";
+    document.getElementById("tagBack").textContent = "";
+    document.querySelector(".card-wrap").style.display = "none";
+    document.querySelector(".nav-row").style.display = "none";
+    document.querySelector(".know-row").style.display = "none";
+    let empty = document.getElementById("emptyMsg");
+    if(!empty){
+      empty = document.createElement("div");
+      empty.id = "emptyMsg";
+      empty.className = "empty";
+      empty.textContent = "🎉 이 조건에 해당하는 카드가 없어요.\n(안 외운 단어만 보기를 껐다가 다시 시도해보세요)";
+      document.body.appendChild(empty);
+    }
+    return;
+  } else {
+    document.querySelector(".card-wrap").style.display = "";
+    document.querySelector(".nav-row").style.display = "";
+    document.querySelector(".know-row").style.display = "";
+    const empty = document.getElementById("emptyMsg");
+    if(empty) empty.remove();
+  }
+
+  const idx = order[pos];
+  const card = DATA[idx];
+
+  document.getElementById("posLabel").textContent = (pos+1) + " / " + total;
+  document.getElementById("progressFill").style.width = ((pos+1)/total*100) + "%";
+
+  document.getElementById("wordFront").textContent = card.k;
+  document.getElementById("tagFront").textContent = card.cat;
+  document.getElementById("tagBack").textContent = card.cat;
+  document.getElementById("wordBack").textContent = card.k;
+  document.getElementById("readingBack").textContent = card.r ? card.r : "";
+  document.getElementById("meaningBack").textContent = card.m;
+
+  const isKnown = known[cardId(card)];
+  document.getElementById("knownBtn").classList.toggle("on-known", !!isKnown);
+  document.getElementById("unknownBtn").classList.toggle("on-unknown", isKnown === false);
+
+  if(wasFlipped){
+    // force reflow so the instant (no-transition) reset actually applies,
+    // then re-enable the flip animation for the next manual flip
+    void cardEl.offsetHeight;
+    requestAnimationFrame(()=>{
+      requestAnimationFrame(()=>{
+        cardEl.classList.remove("no-anim");
+      });
+    });
+  }
+}
+
+function flip(){
+  if(order.length === 0) return;
+  flipped = !flipped;
+  document.getElementById("card").classList.toggle("flipped", flipped);
+}
+
+function next(){
+  if(order.length === 0) return;
+  pos = (pos+1) % order.length;
+  render();
+}
+function prev(){
+  if(order.length === 0) return;
+  pos = (pos-1+order.length) % order.length;
+  render();
+}
+
+function markKnown(val){
+  if(order.length===0) return;
+  const card = DATA[order[pos]];
+  if(val === null){
+    delete known[cardId(card)];
+  } else {
+    known[cardId(card)] = val;
+  }
+  saveProgress();
+  render();
+}
+
+// ---------------- 이벤트 ----------------
+document.getElementById("card").addEventListener("click", flip);
+document.getElementById("flipBtn").addEventListener("click", flip);
+document.getElementById("nextBtn").addEventListener("click", next);
+document.getElementById("prevBtn").addEventListener("click", prev);
+document.getElementById("shuffleBtn").addEventListener("click", shuffleOrder);
+document.getElementById("resetShuffleBtn").addEventListener("click", resetShuffleOrder);
+
+document.getElementById("knownBtn").addEventListener("click", ()=>{
+  const card = DATA[order[pos]];
+  if(known[cardId(card)] === true){ markKnown(null); } else { markKnown(true); }
+});
+document.getElementById("unknownBtn").addEventListener("click", ()=>{
+  const card = DATA[order[pos]];
+  if(known[cardId(card)] === false){ markKnown(null); } else { markKnown(false); }
+});
+
+document.getElementById("reviewOnlyBtn").addEventListener("click", (e)=>{
+  reviewOnly = !reviewOnly;
+  e.target.classList.toggle("active", reviewOnly);
+  buildOrder();
+  render();
+});
+
+document.getElementById("resetProgressBtn").addEventListener("click", ()=>{
+  if(confirm("외운 단어 표시를 전부 초기화할까요?")){
+    known = {};
+    saveProgress();
+    render();
+  }
+});
+
+document.addEventListener("keydown",(e)=>{
+  if(e.code === "Space"){ e.preventDefault(); flip(); }
+  else if(e.code === "ArrowRight"){ next(); }
+  else if(e.code === "ArrowLeft"){ prev(); }
+});
+
+// 카테고리 탭
+const cats = ["전체","2025~2021","2020~2010"];
+const catLabels = {"전체":"전체","2025~2021":"2025~2021","2020~2010":"2020~2010"};
+const tabsWrap = document.getElementById("catTabs");
+cats.forEach(cat=>{
+  const btn = document.createElement("button");
+  btn.className = "tab" + (cat===currentCat ? " active" : "");
+  btn.textContent = catLabels[cat];
+  btn.addEventListener("click", ()=>{
+    currentCat = cat;
+    document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
+    btn.classList.add("active");
+    buildOrder();
+    render();
+  });
+  tabsWrap.appendChild(btn);
+});
+
+// 초기화
+buildOrder();
+render();
+</script>
+</body>
+</html>
