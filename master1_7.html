@@ -197,30 +197,30 @@
     border-radius:10px;
   }
   .word{
-    font-size:clamp(90px, 30vw, 140px);
+    font-size:calc(clamp(90px, 30vw, 140px) * var(--fit,1));
     font-weight:700;
     line-height:1.2;
     word-break:keep-all;
   }
   .reading{
-    font-size:18px;
+    font-size:calc(18px * var(--fit,1));
     color:var(--accent2);
     margin-top:10px;
   }
   .meaning{
-    font-size:clamp(30px, 9vw, 40px);
+    font-size:calc(clamp(30px, 9vw, 40px) * var(--fit,1));
     font-weight:700;
     color:var(--blue);
     margin-bottom:10px;
   }
   .word-back{
-    font-size:clamp(70px, 22vw, 100px);
+    font-size:calc(clamp(70px, 22vw, 100px) * var(--fit,1));
     font-weight:700;
     color:var(--text);
     margin-bottom:14px;
   }
   .reading-small{
-    font-size:clamp(22px, 6.5vw, 28px);
+    font-size:calc(clamp(22px, 6.5vw, 28px) * var(--fit,1));
     font-weight:700;
     color:var(--text);
   }
@@ -310,6 +310,14 @@
     font-size:14px;
     margin-top:40px;
     line-height:1.6;
+  }
+
+
+  .word, .word-back, .meaning, .reading, .reading-small{
+    white-space:nowrap;
+    word-break:keep-all;
+    overflow-wrap:normal;
+    line-height:1.15;
   }
 </style>
 </head>
@@ -636,6 +644,50 @@ cats.forEach(cat=>{
 // 초기화
 buildOrder();
 render();
+</script>
+
+
+<script>
+(function(){
+  var CAP = {'word':170, 'word-back':120, 'reading-small':44, 'meaning':54};
+  function kind(el){
+    for(var k in CAP){ if(el.classList.contains(k)) return k; }
+    return null;
+  }
+  function fitFace(face){
+    var cs = getComputedStyle(face);
+    var availW = face.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+    var availH = face.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom) - 28;
+    var els = Array.prototype.filter.call(face.children, function(c){ return kind(c); });
+    els.forEach(function(el){
+      var cap = CAP[kind(el)];
+      el.style.fontSize = '100px';
+      var w = el.offsetWidth;
+      var size = w ? Math.floor(100 * availW / w) : cap;
+      el.style.fontSize = Math.max(10, Math.min(cap, size)) + 'px';
+    });
+    var kids = Array.prototype.filter.call(face.children, function(c){ return getComputedStyle(c).position !== 'absolute'; });
+    var need = 0;
+    kids.forEach(function(c){
+      var st = getComputedStyle(c);
+      need += c.offsetHeight + (parseFloat(st.marginTop)||0) + (parseFloat(st.marginBottom)||0);
+    });
+    if(need > availH){
+      var f = availH / need;
+      els.forEach(function(el){ el.style.fontSize = Math.max(10, Math.floor(parseFloat(el.style.fontSize) * f)) + 'px'; });
+    }
+  }
+  function fitCards(){
+    var wrap = document.querySelector('.card-wrap');
+    if(!wrap || wrap.style.display === 'none') return;
+    document.querySelectorAll('.face').forEach(fitFace);
+  }
+  var _render = render;
+  render = function(){ _render.apply(this, arguments); fitCards(); };
+  window.addEventListener('resize', fitCards);
+  if(document.fonts && document.fonts.ready) document.fonts.ready.then(fitCards);
+  fitCards();
+})();
 </script>
 </body>
 </html>
